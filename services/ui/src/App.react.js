@@ -31,6 +31,17 @@ import "tabler-react/dist/Tabler.css";
 type Props = {||};
 
 function App(props: Props): React.Node {
+
+
+    let sources = [];
+
+    fetch('http://localhost:8081/')
+        .then(response => response.json())
+        .then(data => {
+            sources = data.sources;
+            console.log(sources)
+        });
+
   return (
     <React.StrictMode>
       <Router>

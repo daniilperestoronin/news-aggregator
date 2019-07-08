@@ -1,57 +1,64 @@
 // @flow
 
-import * as React from "react";
+import React, {useEffect, useState} from "react";
 
-import {
-    Page,
-    Avatar,
-    Icon,
-    Grid,
-    Card,
-    Text,
-    Table,
-    Alert,
-    Progress,
-    colors,
-    Dropdown,
-    Button,
-    StampCard,
-    StatsCard,
-    ProgressCard,
-    Badge, Form,
-} from "tabler-react";
-
-import C3Chart from "react-c3js";
+import {Card, Form, Grid, Page,} from "tabler-react";
 
 import SiteWrapper from "./SiteWrapper.react";
-import ComponentDemo from "./ComponentDemo";
+import axios from 'axios';
 
-function Home() {
-    return (
-        <SiteWrapper>
-            <Page.Content title="News Aggregator">
+export default class Home extends React.Component {
 
-                <Form.Group label="Select source">
-                    <Form.Select>
-                        <option>United Kingdom</option>
-                        <option>Germany</option>
-                    </Form.Select>
-                </Form.Group>
+    state = {
+        sources: [],
+        articles: []
+    };
 
-                <Grid.Row cards={true}>
-                    <Card
-                        title="This is a standard card"
-                        isCollapsible
-                        body="Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Aperiam deleniti fugit incidunt, iste, itaque minima neque
-                        pariatur perferendis sed suscipit velit vitae voluptatem. A
-                        consequuntur, deserunt eaque error nulla temporibus!"
-                        footer="This is standard card footer"
-                    />
-                </Grid.Row>
-            </Page.Content>
-        </SiteWrapper>
-    );
+    componentDidMount() {
+        axios.get('http://localhost:8081/')
+            .then(res => {
+                const sources = res.data.sources;
+                this.setState({sources});
+            })
+
+        axios.get('http://localhost:8082/?sources=techcrunch')
+            .then(res => {
+                const articles = res.data.articles;
+                this.setState({articles});
+            })
+    }
+
+    render() {
+        return (<SiteWrapper>
+                <Page.Content title="News Aggregator">
+
+                    <Form.Group label="Select source">
+                        <Form.Select>
+                            {this.state.sources.map((item) => {
+                                    return (
+                                        <option key={item.id}>{item.name}</option>
+                                    );
+                                }
+                            )}
+                        </Form.Select>
+                    </Form.Group>
+
+                    <Grid.Row cards={true}>
+                        {this.state.articles.map((item) => {
+                                return (
+                                    <Card
+                                        title={item.title}
+                                        isCollapsible
+                                        body={item.description}
+                                        footer={item.author}
+                                    />
+                                );
+                            }
+                        )}
+
+                    </Grid.Row>
+                </Page.Content>
+            </SiteWrapper>
+        )
+    };
 }
-
-export default Home;
