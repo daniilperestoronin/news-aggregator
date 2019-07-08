@@ -27,5 +27,5 @@ func main() {
 		context.Header("Content-Type", "application/json; charset=utf-8")
 		context.String(200, string(responseData))
 	})
-	router.Run("8081")
+	router.Run(":8081")
 }
