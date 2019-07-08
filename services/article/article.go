@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"log"
@@ -13,8 +14,11 @@ func main() {
 
 	apiKey := os.Args[1]
 
-	route := gin.Default()
-	route.GET("/", func(context *gin.Context) {
+	router := gin.Default()
+
+	router.Use(cors.Default())
+
+	router.GET("/", func(context *gin.Context) {
 
 		sources := context.Query("sources")
 
@@ -33,5 +37,5 @@ func main() {
 		context.Header("Content-Type", "application/json; charset=utf-8")
 		context.String(200, string(responseData))
 	})
-	route.Run(":8082")
+	router.Run(":8082")
 }

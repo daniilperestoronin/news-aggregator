@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"log"
@@ -11,6 +12,9 @@ import (
 
 func main() {
 	router := gin.Default()
+
+	router.Use(cors.Default())
+
 	router.GET("/", func(context *gin.Context) {
 		response, err := http.Get("https://newsapi.org/v1/sources?language=en")
 
