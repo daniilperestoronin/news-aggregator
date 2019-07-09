@@ -11,12 +11,14 @@ import (
 )
 
 func main() {
+	apiKey := os.Args[1]
+
 	router := gin.Default()
 
 	router.Use(cors.Default())
 
 	router.GET("/", func(context *gin.Context) {
-		response, err := http.Get("https://newsapi.org/v1/sources?language=en")
+		response, err := http.Get("https://newsapi.org/v2/sources?apiKey=" + apiKey)
 
 		if err != nil {
 			fmt.Print(err.Error())
