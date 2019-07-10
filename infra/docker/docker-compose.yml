@@ -35,7 +35,7 @@ services:
   ui:
     image: ${USERNAME}/ui:${UI_SERVICE_VERSION}
     ports:
-    - 9292:9292
+    - ${UI_SERVICE_PORT}:80
     environment:
     - SOURCE_SERVICE_HOST=source
     - SOURCE_SERVICE_PORT=${SOURCE_SERVICE_PORT}
