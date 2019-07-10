@@ -6,8 +6,8 @@ RUN go get -d -v
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflags "-static"' -o app .
 
 FROM alpine:latest
-ENV api_key ''
+ENV NEWS_API_KEY ''
 RUN apk --no-cache add ca-certificates
 COPY --from=builder /build/app /app/
 WORKDIR /app
-CMD ./app $api_key
+CMD ./app $NEWS_API_KEY
