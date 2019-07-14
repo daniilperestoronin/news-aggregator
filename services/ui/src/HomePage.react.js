@@ -1,6 +1,4 @@
-// @flow
-
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { Card, Form, Grid, Page, } from "tabler-react";
 
@@ -16,7 +14,9 @@ export default class Home extends React.Component {
   };
 
   componentDidMount() {
-    axios.get('http://localhost:8081/')
+    console.log(process.env.REACT_APP_SOURCE_HOST);
+    console.log(process.env.REACT_APP_ARTICLE_HOST);
+    axios.get(process.env.REACT_APP_SOURCE_HOST)
       .then(res => {
         const sources = res.data.sources;
         this.setState({ sources });
@@ -24,7 +24,7 @@ export default class Home extends React.Component {
   }
 
   getArticlesForSource = (event) => {
-    axios.get('http://localhost:8082/?sources=' + event.target.value)
+    axios.get(process.env.REACT_APP_ARTICLE_HOST + '?sources=' + event.target.value)
       .then(res => {
         const articles = res.data.articles;
         this.setState({ articles });

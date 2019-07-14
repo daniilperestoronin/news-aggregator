@@ -2,8 +2,10 @@
 FROM node:12.2.0-alpine as build
 WORKDIR /app
 COPY . /app
+ARG REACT_APP_SOURCE_HOST=''
+ARG REACT_APP_ARTICLE_HOST=''
 RUN npm install 
-RUN npm run build
+RUN REACT_APP_SOURCE_HOST=${REACT_APP_SOURCE_HOST} REACT_APP_ARTICLE_HOST=${REACT_APP_ARTICLE_HOST} npm run build
 
 FROM nginx:1.16.0-alpine
 COPY --from=build /app/build /usr/share/nginx/html
