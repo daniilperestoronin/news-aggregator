@@ -19,3 +19,7 @@
 # UI
 node_modules
 build
+
+#vsc
+.vscode
+__debug_bin
