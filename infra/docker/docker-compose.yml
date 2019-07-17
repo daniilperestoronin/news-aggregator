@@ -38,11 +38,10 @@ services:
       labels:
         traefik.enable: "true"
         traefik.backend: "test"
-        traefik.docker.network: "cat_traefik-network"
+        traefik.docker.network: "backend"
         traefik.frontend.rule: "Host:mysubdomain.notmydomain.com;PathPrefix:/api/source"
         traefik.port: 80
         traefik.frontend.passHostHeader: "true"
-        traefik.domain: "mysubdomain.notmydomain.com"
     networks:
       - backend
     logging:
@@ -66,11 +65,10 @@ services:
       labels:
         traefik.enable: "true"
         traefik.backend: "test"
-        traefik.docker.network: "cat_traefik-network"
+        traefik.docker.network: "backend"
         traefik.frontend.rule: "Host:mysubdomain.notmydomain.com;PathPrefix:/api/article"
         traefik.port: 80
         traefik.frontend.passHostHeader: "true"
-        traefik.domain: "mysubdomain.notmydomain.com"
     networks:
       - frontend
     logging:
@@ -93,11 +91,10 @@ services:
       labels:
         traefik.enable: "true"
         traefik.backend: "test"
-        traefik.docker.network: "cat_traefik-network"
+        traefik.docker.network: "frontend"
         traefik.frontend.rule: "Host:mysubdomain.notmydomain.com;"
         traefik.port: 80
         traefik.frontend.passHostHeader: "true"
-        traefik.domain: "mysubdomain.notmydomain.com"
     networks:
       - backend
     logging:
