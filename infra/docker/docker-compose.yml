@@ -11,16 +11,12 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik/traefik.toml:/traefik.toml
-      - ./traefik/acme.json:/acme.json
     networks:
       - frontend
       - backend
     command:
       --api \
       --docker \
-      --docker.swarmmode \
-      --docker.domain=mysubdomain.notmydomain.com \
-      --docker.watch \
       --logLevel=DEBUG
     deploy:
       placement:
@@ -37,6 +33,7 @@ services:
       - NEWS_API_KEY=${NEWS_API_KEY}
     ports:
       - 8081:8081
+      - 24224:24224
     deploy:
       labels:
         traefik.enable: "true"
@@ -52,7 +49,7 @@ services:
       driver: "fluentd"
       options:
         fluentd-address: localhost:24224
-        tag: service.source
+        tag: service.post
 
   article:
     image: ${USERNAME}/article:${ARTICLE_SERVICE_VERSION}
@@ -64,7 +61,7 @@ services:
     depends_on:
       - source
     ports:
-      - 80:8082
+      - 8082:8082
     deploy:
       labels:
         traefik.enable: "true"
@@ -88,7 +85,7 @@ services:
       context: ../../services/ui
       dockerfile: Dockerfile
     ports:
-      - 80:80
+      - 81:80
     depends_on:
       - source
       - article
