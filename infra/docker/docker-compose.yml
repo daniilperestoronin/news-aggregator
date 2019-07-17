@@ -4,29 +4,35 @@ services:
 
   reverse-proxy:
     image: traefik
-      ports: ["80:80", "443:443", "8080:8080"]
-      volumes:
-        - /var/run/docker.sock:/var/run/docker.sock
-        - ./traefik/traefik.toml:/traefik.toml
-        - ./traefik/acme.json:/acme.json
-      networks:
-        - frontend
-        - backend
-      command:
-        --api \
-        --docker \
-        --docker.swarmmode \
-        --docker.domain=mysubdomain.notmydomain.com \
-        --docker.watch \
-        --logLevel=DEBUG
-      deploy:
-        placement:
-          constraints: [node.role==manager]
-        labels:
-          traefik.enable: "false"
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik/traefik.toml:/traefik.toml
+      - ./traefik/acme.json:/acme.json
+    networks:
+      - frontend
+      - backend
+    command:
+      --api \
+      --docker \
+      --docker.swarmmode \
+      --docker.domain=mysubdomain.notmydomain.com \
+      --docker.watch \
+      --logLevel=DEBUG
+    deploy:
+      placement:
+        constraints: [node.role==manager]
+      labels:
+        traefik.enable: "false"
 
   source:
     image: ${USERNAME}/source:${SOURCE_SERVICE_VERSION}
+    build:
+      context: ../../services/source
+      dockerfile: Dockerfile
     environment:
       - NEWS_API_KEY=${NEWS_API_KEY}
     ports:
@@ -50,6 +56,9 @@ services:
 
   article:
     image: ${USERNAME}/article:${ARTICLE_SERVICE_VERSION}
+    build:
+      context: ../../services/article
+      dockerfile: Dockerfile
     environment:
       - NEWS_API_KEY=${NEWS_API_KEY}
     depends_on:
@@ -75,6 +84,9 @@ services:
 
   ui:
     image: ${USERNAME}/ui:${UI_SERVICE_VERSION}
+    build:
+      context: ../../services/ui
+      dockerfile: Dockerfile
     ports:
       - 80:80
     depends_on:
