@@ -2,14 +2,46 @@ version: '3.3'
 
 services:
 
+  reverse-proxy:
+    image: traefik
+      ports: ["80:80", "443:443", "8080:8080"]
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - ./traefik/traefik.toml:/traefik.toml
+        - ./traefik/acme.json:/acme.json
+      networks:
+        - frontend
+        - backend
+      command:
+        --api \
+        --docker \
+        --docker.swarmmode \
+        --docker.domain=mysubdomain.notmydomain.com \
+        --docker.watch \
+        --logLevel=DEBUG
+      deploy:
+        placement:
+          constraints: [node.role==manager]
+        labels:
+          traefik.enable: "false"
+
   source:
     image: ${USERNAME}/source:${SOURCE_SERVICE_VERSION}
     environment:
-    - NEWS_API_KEY=${NEWS_API_KEY}
+      - NEWS_API_KEY=${NEWS_API_KEY}
     ports:
-    - 80:8081
+      - 8081:8081
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.backend: "test"
+        traefik.docker.network: "cat_traefik-network"
+        traefik.frontend.rule: "Host:mysubdomain.notmydomain.com;PathPrefix:/api/source"
+        traefik.port: 80
+        traefik.frontend.passHostHeader: "true"
+        traefik.domain: "mysubdomain.notmydomain.com"
     networks:
-    - news_aggregator_network
+      - backend
     logging:
       driver: "fluentd"
       options:
@@ -19,13 +51,22 @@ services:
   article:
     image: ${USERNAME}/article:${ARTICLE_SERVICE_VERSION}
     environment:
-    - NEWS_API_KEY=${NEWS_API_KEY}
+      - NEWS_API_KEY=${NEWS_API_KEY}
     depends_on:
-    - source
+      - source
     ports:
-    - 80:8082
+      - 80:8082
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.backend: "test"
+        traefik.docker.network: "cat_traefik-network"
+        traefik.frontend.rule: "Host:mysubdomain.notmydomain.com;PathPrefix:/api/article"
+        traefik.port: 80
+        traefik.frontend.passHostHeader: "true"
+        traefik.domain: "mysubdomain.notmydomain.com"
     networks:
-    - news_aggregator_network
+      - frontend
     logging:
       driver: "fluentd"
       options:
@@ -35,15 +76,21 @@ services:
   ui:
     image: ${USERNAME}/ui:${UI_SERVICE_VERSION}
     ports:
-    - 80:80
-    environment:
-    - REACT_APP_SOURCE_HOST=source
-    - REACT_APP_ARTICLE_HOST=article
+      - 80:80
     depends_on:
-    - source
-    - article
+      - source
+      - article
+    deploy:
+      labels:
+        traefik.enable: "true"
+        traefik.backend: "test"
+        traefik.docker.network: "cat_traefik-network"
+        traefik.frontend.rule: "Host:mysubdomain.notmydomain.com;"
+        traefik.port: 80
+        traefik.frontend.passHostHeader: "true"
+        traefik.domain: "mysubdomain.notmydomain.com"
     networks:
-    - news_aggregator_network
+      - backend
     logging:
       driver: "fluentd"
       options:
@@ -51,4 +98,5 @@ services:
         tag: service.ui
 
 networks:
-  news_aggregator_network:
+  backend:
+  frontend:

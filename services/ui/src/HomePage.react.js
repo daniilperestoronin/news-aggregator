@@ -14,22 +14,20 @@ export default class Home extends React.Component {
   };
 
   componentDidMount() {
-    console.log(process.env.REACT_APP_SOURCE_HOST);
-    console.log(process.env.REACT_APP_ARTICLE_HOST);
-    axios.get(process.env.REACT_APP_SOURCE_HOST)
+    axios.get('/api/sources')
       .then(res => {
         const sources = res.data.sources;
         this.setState({ sources });
       });
-  }
+  };
 
   getArticlesForSource = (event) => {
-    axios.get(process.env.REACT_APP_ARTICLE_HOST + '?sources=' + event.target.value)
+    axios.get('/api/article?sources=' + event.target.value)
       .then(res => {
         const articles = res.data.articles;
         this.setState({ articles });
       });
-  }
+  };
 
   render() {
     return (
