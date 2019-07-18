@@ -5,15 +5,13 @@ services:
   reverse-proxy:
     image: traefik
     ports:
-      - 80:80
-      - 443:443
-      - 8080:8080
+    - 80:80
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./traefik/traefik.toml:/traefik.toml
+    - /var/run/docker.sock:/var/run/docker.sock
+    - ./traefik/traefik.toml:/traefik.toml
     networks:
-      - frontend
-      - backend
+    - frontend
+    - backend
     command:
       --api \
       --docker \
@@ -30,20 +28,20 @@ services:
       context: ../../services/source
       dockerfile: Dockerfile
     environment:
-      - NEWS_API_KEY=${NEWS_API_KEY}
+    - NEWS_API_KEY=${NEWS_API_KEY}
     ports:
-      - 8081:8081
-      - 24224:24224
-    deploy:
-      labels:
-        traefik.enable: "true"
-        traefik.backend: "test"
-        traefik.docker.network: "backend"
-        traefik.frontend.rule: "Host:mysubdomain.notmydomain.com;PathPrefix:/api/source"
-        traefik.port: 80
-        traefik.frontend.passHostHeader: "true"
+    - 8081:8081
+    - 24224:24224
+    labels:
+      traefik.frontend.rule: "PathPrefixStrip:/api/source"
+      traefik.backend: "source"
+      traefik.port: "8081"
+      traefik.enable: "true"
+      traefik.passHostHeader: "true"
+      traefik.docker.network: "backend"
+      traefik.frontend.entryPoints: "http"
     networks:
-      - backend
+    - backend
     logging:
       driver: "fluentd"
       options:
@@ -56,21 +54,21 @@ services:
       context: ../../services/article
       dockerfile: Dockerfile
     environment:
-      - NEWS_API_KEY=${NEWS_API_KEY}
+    - NEWS_API_KEY=${NEWS_API_KEY}
     depends_on:
-      - source
+    - source
     ports:
-      - 8082:8082
-    deploy:
-      labels:
-        traefik.enable: "true"
-        traefik.backend: "test"
-        traefik.docker.network: "backend"
-        traefik.frontend.rule: "Host:mysubdomain.notmydomain.com;PathPrefix:/api/article"
-        traefik.port: 80
-        traefik.frontend.passHostHeader: "true"
+    - 8082:8082
+    labels:
+      traefik.frontend.rule: "PathPrefixStrip:/api/article"
+      traefik.backend: "article"
+      traefik.port: "8082"
+      traefik.enable: "true"
+      traefik.passHostHeader: "true"
+      traefik.docker.network: "backend"
+      traefik.frontend.entryPoints: "http"
     networks:
-      - frontend
+    - backend
     logging:
       driver: "fluentd"
       options:
@@ -83,20 +81,20 @@ services:
       context: ../../services/ui
       dockerfile: Dockerfile
     ports:
-      - 81:80
+    - 81:80
     depends_on:
-      - source
-      - article
-    deploy:
-      labels:
-        traefik.enable: "true"
-        traefik.backend: "test"
-        traefik.docker.network: "frontend"
-        traefik.frontend.rule: "Host:mysubdomain.notmydomain.com;"
-        traefik.port: 80
-        traefik.frontend.passHostHeader: "true"
+    - source
+    - article
+    labels:
+      traefik.frontend.rule: "PathPrefixStrip:/"
+      traefik.backend: "ui"
+      traefik.port: "81"
+      traefik.enable: "true"
+      traefik.passHostHeader: "true"
+      traefik.docker.network: "frontend"
+      traefik.frontend.entryPoints: "http"
     networks:
-      - backend
+    - frontend
     logging:
       driver: "fluentd"
       options:
