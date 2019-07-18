@@ -14,7 +14,7 @@ export default class Home extends React.Component {
   };
 
   componentDidMount() {
-    axios.get('/api/sources')
+    axios.get('/api/source')
       .then(res => {
         const sources = res.data.sources;
         this.setState({ sources });
