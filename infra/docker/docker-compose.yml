@@ -29,8 +29,6 @@ services:
       dockerfile: Dockerfile
     environment:
     - NEWS_API_KEY=${NEWS_API_KEY}
-    ports:
-    - 24224:24224
     labels:
       traefik.frontend.rule: "PathPrefixStrip:/api/source"
       traefik.backend: "source"
@@ -42,10 +40,10 @@ services:
     networks:
     - backend
     logging:
-      driver: "fluentd"
+      driver: gelf
       options:
-        fluentd-address: localhost:24224
-        tag: service.post
+        gelf-address: udp://localhost:12201
+        tag: source.service
 
   article:
     image: ${USERNAME}/article:${ARTICLE_SERVICE_VERSION}
@@ -67,10 +65,10 @@ services:
     networks:
     - backend
     logging:
-      driver: "fluentd"
+      driver: gelf
       options:
-        fluentd-address: localhost:24224
-        tag: service.article
+        gelf-address: udp://localhost:12201
+        tag: article.service
 
   ui:
     image: ${USERNAME}/ui:${UI_SERVICE_VERSION}
@@ -91,10 +89,10 @@ services:
     networks:
     - frontend
     logging:
-      driver: "fluentd"
+      driver: gelf
       options:
-        fluentd-address: localhost:24224
-        tag: service.ui
+        gelf-address: udp://localhost:12201
+        tag: ui.service
 
 networks:
   backend:
