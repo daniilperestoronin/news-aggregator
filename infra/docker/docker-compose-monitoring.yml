@@ -3,11 +3,12 @@ version: '3.3'
 services:
 
   prometheus:
-    image: ${USERNAME}/prometheus
+    image: prom/prometheus:v2.1.0
     ports:
     - '9090:9090'
     volumes:
-    - prometheus_data:/prometheus
+    - ../config/monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    - ../config/monitoring/prometheus/alerts.yml:/etc/prometheus/alerts.yml
     command:
     - '--config.file=/etc/prometheus/prometheus.yml'
     - '--storage.tsdb.path=/prometheus'
@@ -48,7 +49,9 @@ services:
     - 3000:3000
 
   alertmanager:
-    image: ${USERNAME}/alertmanager
+    image: prom/alertmanager:v0.14.0
+    volumes:
+    - ../config/monitoring/alertmanager/config.yml:/etc/alertmanager/config.yml
     command:
     - '--config.file=/etc/alertmanager/config.yml'
     ports:
