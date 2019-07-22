@@ -8,4 +8,4 @@ jobs:
     script: echo "Build docker images"
   - stage: deploy
     name: "Deploy to GCP"
-    script: "Deploy to GCP"
+    script: echo "Deploy to GCP"
