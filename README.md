@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/daniilperestoronin/go-news-aggregator.svg?branch=master)](https://travis-ci.org/daniilperestoronin/go-news-aggregator)
+
 # Simple News Aggregator
 
 Simple News Aggregator is tool for news aggregating. 

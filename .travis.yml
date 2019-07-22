@@ -2,5 +2,10 @@ jobs:
   include:
   - stage: test
     name: "Unit Tests"
+    script: echo "Unit Tests"
+  - stage: build
+    name: "Build docker images"
+    script: echo "Build docker images"
   - stage: deploy
     name: "Deploy to GCP"
+    script: "Deploy to GCP"
