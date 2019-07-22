@@ -1,7 +1,8 @@
 jobs:
   include:
-  - stage: test
-    name: "Backend services unit tests"
+
+  - stage: "Article service test"
+    name: "Article service test"
     dist: xenial
     language: go
     before_script:
@@ -9,11 +10,21 @@ jobs:
     - go get -d -v
     script: go test
 
+  - stage: "Source service test"
+    name: "Source service test"
+    dist: xenial
+    language: go
+    before_script:
+    - cd ./services/source
+    - go get -d -v
+    script: go test
+
   - stage: build
     name: "Build docker images"
     services:
     - docker
-    script: echo "Build docker images"
+    before_script: cd ./infra/docker/
+    script: ls -a
 
   - stage: deploy
     name: "Deploy to GCP"
