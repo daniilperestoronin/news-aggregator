@@ -24,7 +24,7 @@ jobs:
     services:
     - docker
     before_script: cd ./infra/docker/
-    script: ls -a
+    script: docker-compose build
 
   - stage: deploy
     name: "Deploy to GCP"
