@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/daniilperestoronin/go-news-aggregator.svg?branch=master)](https://travis-ci.org/daniilperestoronin/go-news-aggregator)
-
+[![Build Status](https://travis-ci.org/daniilperestoronin/news-aggregator.svg?branch=master)](https://travis-ci.org/daniilperestoronin/news-aggregator)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e9f6f69e284240249b110695d6f8ecce)](https://app.codacy.com/app/daniilperestoronin/news-aggregator?utm_source=github.com&utm_medium=referral&utm_content=daniilperestoronin/news-aggregator&utm_campaign=Badge_Grade_Dashboard)
 
 # Simple News Aggregator
