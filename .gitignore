@@ -22,3 +22,10 @@ __debug_bin
 
 # Docker
 .env
+
+#terraform
+.terraform
+.terraform.tfstate.lock.info
+terraform.tfstate.backup
+terraform.tfstate
+terraform.tfvars

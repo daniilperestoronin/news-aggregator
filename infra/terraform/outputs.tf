@@ -1,18 +1,23 @@
-output "kubernetes_endpoint" {
+output "client_certificate" {
+  value     = "${google_container_cluster.cluster.master_auth.0.client_certificate}"
   sensitive = true
-  value     = module.gke.endpoint
 }
 
-output "client_token" {
+output "client_key" {
+  value     = "${google_container_cluster.cluster.master_auth.0.client_key}"
   sensitive = true
-  value     = base64encode(data.google_client_config.default.access_token)
 }
 
-output "ca_certificate" {
-  value = module.gke.ca_certificate
+output "cluster_ca_certificate" {
+  value     = "${google_container_cluster.cluster.master_auth.0.cluster_ca_certificate}"
+  sensitive = true
 }
 
-output "service_account" {
-  description = "The service account to default running nodes as if not overridden in `node_pools`."
-  value       = module.gke.service_account
+output "cluster_name" {
+  value     = "${google_container_cluster.cluster.name}"
+}
+
+output "host" {
+  value     = "${google_container_cluster.cluster.endpoint}"
+  sensitive = true
 }

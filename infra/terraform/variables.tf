@@ -1,32 +1,39 @@
-variable "project_id" {
-  description = "The project ID to host the cluster in"
-}
-
-variable "cluster_name_suffix" {
-  description = "A suffix to append to the default cluster name"
-  default     = ""
+variable "project" {
+  default = "<your_project_name>"
 }
 
 variable "region" {
-  description = "The region to host the cluster in"
+  default = "eu-west1-a"
 }
 
-variable "network" {
-  description = "The VPC network to host the cluster in"
+variable "cluster_location" {
+  default = "europe-west2-a"
 }
 
-variable "subnetwork" {
-  description = "The subnetwork to host the cluster in"
+variable "cluster_k8s_version" {
+  default = "1.13.7-gke.15"
 }
 
-variable "ip_range_pods" {
-  description = "The secondary ip range to use for pods"
+variable "initial_node_count" {
+  default = 3
 }
 
-variable "ip_range_services" {
-  description = "The secondary ip range to use for pods"
+variable "autoscaling_min_node_count" {
+  default = 1
 }
 
-variable "compute_engine_service_account" {
-  description = "Service account to associate to the nodes in the cluster"
+variable "autoscaling_max_node_count" {
+  default = 4
+}
+
+variable "disk_size_gb" {
+  default = 20
+}
+
+variable "disk_type" {
+  default = "pd-standard"
+}
+
+variable "machine_type" {
+  default = "f1-micro"
 }
