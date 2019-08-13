@@ -20,6 +20,6 @@ spec:
     spec:
       containers:
         - name: article
-          image: danniilperestoronin/article:latest
+          image: danniilperestoronin/article:0.0.1
           ports:
-            - containerPort: 80801
+            - containerPort: 80

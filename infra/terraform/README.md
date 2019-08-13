@@ -16,11 +16,27 @@ terraform apply
 ### Get credentials for kubernetes
 
 ```bash
-gcloud container clusters get-credentials news-agg-host-dev-europe-west2-a --zone europe-west2-a --project news-agg-host-dev
+gcloud container clusters get-credentials news-agg-host-dev-europe-north1-a --zone europe-north1-a --project news-agg-host-dev
 ```
 
 ### Check
 
 ```bash
 kubectl get nodes
+```
+
+```bash
+kubectl apply -f ../kubernetes/proxy/traefik-deployment.yaml
+```
+
+```bash
+kubectl apply -f ../kubernetes/services/source/
+```
+
+```bash
+kubectl apply -f ../kubernetes/services/article/
+```
+
+```bash
+kubectl apply -f ../kubernetes/services/ui/
 ```
