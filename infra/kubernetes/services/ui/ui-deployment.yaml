@@ -1,0 +1,25 @@
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: ui
+  labels:
+    app: ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ui
+      task: ui
+  template:
+    metadata:
+      labels:
+        app: ui
+        task: ui
+        version: v0.0.1
+    spec:
+      containers:
+        - name: ui
+          image: danniilperestoronin/ui:latest
+          ports:
+            - containerPort: 80
