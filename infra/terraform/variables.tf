@@ -3,15 +3,15 @@ variable "project" {
 }
 
 variable "region" {
-  default = "eu-west1-a"
+  default = "europe-north1"
 }
 
 variable "cluster_location" {
-  default = "europe-west2-a"
+  default = "europe-north1-a"
 }
 
 variable "cluster_k8s_version" {
-  default = "1.13.7-gke.15"
+  default = "1.13.7-gke.8"
 }
 
 variable "initial_node_count" {
