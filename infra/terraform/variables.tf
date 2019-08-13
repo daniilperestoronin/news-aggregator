@@ -23,7 +23,7 @@ variable "autoscaling_min_node_count" {
 }
 
 variable "autoscaling_max_node_count" {
-  default = 4
+  default = 6
 }
 
 variable "disk_size_gb" {
