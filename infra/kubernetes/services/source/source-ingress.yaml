@@ -7,10 +7,9 @@ metadata:
     traefik.frontend.rule.type: PathPrefixStrip
 spec:
   rules:
-  - host: news-agg.com
-    http:
-      paths:
-      - path: /api/source
-        backend:
-          serviceName: source
-          servicePort: source-http
+    - http:
+        paths:
+        - path: /api/source
+          backend:
+            serviceName: source
+            servicePort: source-http

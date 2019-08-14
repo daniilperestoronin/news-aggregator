@@ -65,3 +65,34 @@ It uses:
 ```bash
 kubectl apply -f ./logging/
 ```
+
+## All in one script
+
+```bash
+kubectl apply -f ./proxy/
+kubectl apply -f ./services/source/
+kubectl apply -f ./services/article/
+kubectl apply -f ./services/ui/
+kubectl apply -f ./monitoring/alertmanager/
+kubectl apply -f ./monitoring/prometheus/
+kubectl apply -f ./monitoring/kube-state-metrics/
+kubectl apply -f ./monitoring/node-exporter/
+kubectl apply -f ./monitoring/grafana/
+kubectl apply -f ./monitoring/ingress.yaml
+kubectl apply -f ./logging/
+```
+
+
+```bash
+kubectl delete -f ./proxy/
+kubectl delete -f ./services/source/
+kubectl delete -f ./services/article/
+kubectl delete -f ./services/ui/
+kubectl delete -f ./monitoring/alertmanager/
+kubectl delete -f ./monitoring/prometheus/
+kubectl delete -f ./monitoring/kube-state-metrics/
+kubectl delete -f ./monitoring/node-exporter/
+kubectl delete -f ./monitoring/grafana/
+kubectl delete -f ./monitoring/ingress.yaml
+kubectl delete -f ./logging/
+```

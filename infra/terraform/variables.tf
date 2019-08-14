@@ -23,7 +23,7 @@ variable "autoscaling_min_node_count" {
 }
 
 variable "autoscaling_max_node_count" {
-  default = 6
+  default = 4
 }
 
 variable "disk_size_gb" {
@@ -35,5 +35,5 @@ variable "disk_type" {
 }
 
 variable "machine_type" {
-  default = "f1-micro"
+  default = "n1-standard-1"
 }

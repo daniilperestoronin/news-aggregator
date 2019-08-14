@@ -7,8 +7,7 @@ metadata:
     traefik.frontend.rule.type: PathPrefixStrip
 spec:
   rules:
-  - host: news-agg.com
-    http:
+  - http:
       paths:
       - path: /
         backend:
