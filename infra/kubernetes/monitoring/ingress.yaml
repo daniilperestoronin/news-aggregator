@@ -7,21 +7,21 @@ metadata:
     kubernetes.io/ingress.class: traefik
 spec:
   rules:
-  - host: grafana.yourdomain.com
+  - host: grafana.news-agg.com
     http:
       paths:
       - path: /
         backend:
           serviceName: grafana
           servicePort: 3000
-  - host: prometheus.yourdomain.com
+  - host: prometheus.news-agg.com
     http:
       paths:
       - path: /
         backend:
           serviceName: prometheus-service
           servicePort: 8080
-  - host: alertmanager.yourdomain.com
+  - host: alertmanager.news-agg.com
     http: 
       paths:
       - path: /

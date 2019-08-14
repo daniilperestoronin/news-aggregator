@@ -58,3 +58,10 @@ resource "google_container_cluster" "cluster" {
     }
   }
 }
+
+resource "google_compute_disk" "default" {
+  name  = "prometheus-volume"
+  type  = "pd-ssd"
+  zone  = "${var.cluster_location}"
+  size  = 15
+}
