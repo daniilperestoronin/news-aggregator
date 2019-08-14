@@ -5,26 +5,24 @@ metadata:
   namespace: monitoring
   annotations:
     kubernetes.io/ingress.class: traefik
+    traefik.frontend.rule.type: PathPrefixStrip
 spec:
   rules:
-  - host: grafana.news-agg.com
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: grafana
-          servicePort: 3000
-  - host: prometheus.news-agg.com
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: prometheus-service
-          servicePort: 8080
-  - host: alertmanager.news-agg.com
-    http: 
-      paths:
-      - path: /
-        backend:
-          serviceName: alertmanager
-          servicePort: 9093
+    - http:
+        paths:
+        - path: /grafana
+          backend:
+            serviceName: grafana
+            servicePort: grafana-http
+    - http:
+        paths:
+        - path: /prometheus
+          backend:
+            serviceName: prometheus-service
+            servicePort: prometheus
+    - http:
+        paths:
+        - path: /alertmanager
+          backend:
+            serviceName: alertmanager
+            servicePort: alertmanager

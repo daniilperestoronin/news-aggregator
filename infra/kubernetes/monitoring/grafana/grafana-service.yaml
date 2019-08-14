@@ -12,7 +12,8 @@ metadata:
 spec:
 #  type: LoadBalancer
   ports:
-  - port: 3000
+  - name: grafana-http
+    port: 80
     targetPort: 3000
   selector:
     k8s-app: grafana
