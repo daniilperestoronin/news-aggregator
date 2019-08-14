@@ -8,7 +8,9 @@ spec:
     app: traefik-ingress-controller
   ports:
     - port: 80
+      targetPort: 80
       name: http
     - port: 8080
+      targetPort: 8080
       name: admin
   type: LoadBalancer

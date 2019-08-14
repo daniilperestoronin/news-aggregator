@@ -5,9 +5,9 @@ metadata:
   name: source
 spec:
   ports:
-    - name: http
-      targetPort: 8081
-      port: 80
+  - name: source-http
+    targetPort: 8081
+    port: 80
   selector:
     app: source
     task: source

@@ -5,9 +5,9 @@ metadata:
   name: ui
 spec:
   ports:
-    - name: http
-      targetPort: 80
-      port: 80
+  - name: ui-http
+    targetPort: 80
+    port: 80
   selector:
     app: ui
     task: ui

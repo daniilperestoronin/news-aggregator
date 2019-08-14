@@ -19,7 +19,7 @@ spec:
         version: v0.0.1
     spec:
       containers:
-        - name: source
-          image: danniilperestoronin/source:0.0.1
-          ports:
-            - containerPort: 80
+      - name: source
+        image: danniilperestoronin/source:0.0.1
+        ports:
+        - containerPort: 80

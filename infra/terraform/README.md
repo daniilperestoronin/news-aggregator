@@ -24,19 +24,3 @@ gcloud container clusters get-credentials news-agg-host-dev-europe-north1-a --zo
 ```bash
 kubectl get nodes
 ```
-
-```bash
-kubectl apply -f ../kubernetes/proxy/traefik-deployment.yaml
-```
-
-```bash
-kubectl apply -f ../kubernetes/services/source/
-```
-
-```bash
-kubectl apply -f ../kubernetes/services/article/
-```
-
-```bash
-kubectl apply -f ../kubernetes/services/ui/
-```

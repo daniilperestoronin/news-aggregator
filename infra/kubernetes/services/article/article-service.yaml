@@ -5,9 +5,9 @@ metadata:
   name: article
 spec:
   ports:
-    - name: http
-      targetPort: 8082
-      port: 80
+  - name: article-http
+    targetPort: 8082
+    port: 80
   selector:
     app: article
     task: article

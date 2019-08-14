@@ -7,10 +7,10 @@ metadata:
     traefik.frontend.rule.type: PathPrefixStrip
 spec:
   rules:
-    - host: news-aggregator
-      http:
-        paths:
-          - path: /api/article
-            backend:
-              serviceName: article
-              servicePort: http
+  - host: news-agg.com
+    http:
+      paths:
+      - path: /api/article
+        backend:
+          serviceName: article
+          servicePort: article-http
