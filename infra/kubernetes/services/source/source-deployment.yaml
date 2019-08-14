@@ -21,5 +21,8 @@ spec:
       containers:
       - name: source
         image: danniilperestoronin/source:0.0.1
+        env:
+        - name: NEWS_API_KEY
+          value: "5993d461700e41b89843cb196b68e7cb"
         ports:
         - containerPort: 80
