@@ -79,12 +79,12 @@ gcloud container clusters get-credentials news-agg-host-dev-europe-north1-a --zo
 # Deploy Load balanser and proxy
 kubectl apply -f ./infra/kubernetes/proxy/
 
-# Deploy Load balanser and proxy
+# Deploy services
 kubectl apply -f ./infra/kubernetes/services/source/
 kubectl apply -f ./infra/kubernetes/services/article/
 kubectl apply -f ./infra/kubernetes/services/ui/
 
-# Deploy Load balanser and proxy
+# Deploy monitoring stuff
 kubectl apply -f ./infra/kubernetes/monitoring/alertmanager/
 kubectl apply -f ./infra/kubernetes/monitoring/prometheus/
 kubectl apply -f ./infra/kubernetes/monitoring/kube-state-metrics/
@@ -92,7 +92,7 @@ kubectl apply -f ./infra/kubernetes/monitoring/node-exporter/
 kubectl apply -f ./infra/kubernetes/monitoring/grafana/
 kubectl apply -f ./infra/kubernetes/monitoring/ingress.yaml
 
-# Deploy Load balanser and proxy
+# Deploy logging stuff
 kubectl apply -f ./infra/kubernetes/logging/
 ```
 
