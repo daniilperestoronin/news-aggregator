@@ -7,36 +7,38 @@ Simple News Aggregator is tool for news aggregating.
 In current moment using [News Api](https://newsapi.org/) to get information.
 In the future paining add another sources.
 
-## Built With
+## Technology Stack
 
-#### Service stack:
-- [Golang]()
-- [Gin]()
-- [React]()
-- [Docker]()
+### Service stack:
 
-#### Infrastructure:
+#### Backend
+- [Golang](https://golang.org/)
+- [Gin](https://gin-gonic.com/)
+#### Frontend
+- [React](https://reactjs.org/)
+#### Container Platform
+- [Docker](https://www.docker.com/)
 
-##### Container orchestration:
-- [Docker swarm]()
-
-##### Reverse proxy
-- [Traefik]()
-
-##### Logging:
-- [Jaeger]()
-- [Fluentd]()
-- [Elasticsearch]()
-- [Kibana]()
-
-##### Monitoring:
-- [Prometheus]()
-- [Cadvisor]()
-- [Grafana]()
-
-##### Alerting:
-- [Alertmanager]()
-
+### Infrastructure:
+#### Cloud provider
+- [Google Cloud Platform‎](https://cloud.google.com/)
+#### Infrastructure provisioning tool:
+- [Terraform](https://www.terraform.io/)
+#### Container orchestration:
+- [Kubernetes](https://kubernetes.io/)
+#### A reverse proxy / load balancer:
+- [Traefik](https://traefik.io/)
+#### CI/CD
+- [Travis](https://travis-ci.org/)
+#### Logging:
+- [Jaeger](https://www.jaegertracing.io/)
+- [Fluentd](https://www.fluentd.org/)
+- [Elasticsearch](https://www.elastic.co/products/elasticsearch)
+- [Kibana](https://www.elastic.co/products/kibana)
+#### Monitoring:
+- [Prometheus](https://prometheus.io/)
+- [Grafana](https://grafana.com/)
+- [Alertmanager](https://prometheus.io/docs/alerting/alertmanager/)
 
 ## Repository structure
 
@@ -47,6 +49,8 @@ In the future paining add another sources.
     │   │  ├── monitoring   # Monitoring configuration files
     │   │  ├── proxy        # Proxy configuration files
     │   ├── docker          # Docker swarm files
+    │   ├── kubernetes      # Kubernetes files
+    │   ├── terraform       # Terraform files
     ├── services            # Services src folder
     │   ├── article         # Article service src and Dockerfile
     │   ├── source          # Source service src and Dockerfile
@@ -98,9 +102,3 @@ docker-compose -f docker-compose-logging.yml up -d
 # Up logging environment
 docker-compose -f docker-compose-logging.yml up -d
 ```
-
-## Todo
-- [x] Add simple service
-- Preparing infrastructure
-  - [x] Add docker swarm files
-  - [ ] Add Kubernetes 
