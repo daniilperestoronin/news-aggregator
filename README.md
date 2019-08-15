@@ -55,14 +55,51 @@ In the future paining add another sources.
     │   ├── source          # Source service src and Dockerfile
     │   └── ui              # Ui service src and Dockerfile
 
-## Build
-
-(!) Do not forget add .env file
+## Build and deploy 
 
 ```bash
-cd infra/docker/
-docker-compose build
+# Build Services docker images and push it on Docker Hub
+# (!) Do not forget add .env file
+docker-compose -f ./infra/docker/docker-compose.yml build
+docker-compose -f ./infra/docker/docker-compose.yml push
+
+# Create project on Google Cloud Platform
+gcloud projects create news-agg-host-dev --name="News aggregator"
+
+# Create Kubernetes cluster in GCP
+terraform init ./infra/terraform/
+terraform plan ./infra/terraform/
+terraform apply ./infra/terraform/
+
+# Get credentials for kubernetes
+gcloud container clusters get-credentials news-agg-host-dev-europe-north1-a --zone europe-north1-a --project news-agg-host-dev
+
+# Deploy Services in Kubernetes
+
+# Deploy Load balanser and proxy
+kubectl apply -f ./infra/kubernetes/proxy/
+
+# Deploy Load balanser and proxy
+kubectl apply -f ./infra/kubernetes/services/source/
+kubectl apply -f ./infra/kubernetes/services/article/
+kubectl apply -f ./infra/kubernetes/services/ui/
+
+# Deploy Load balanser and proxy
+kubectl apply -f ./infra/kubernetes/monitoring/alertmanager/
+kubectl apply -f ./infra/kubernetes/monitoring/prometheus/
+kubectl apply -f ./infra/kubernetes/monitoring/kube-state-metrics/
+kubectl apply -f ./infra/kubernetes/monitoring/node-exporter/
+kubectl apply -f ./infra/kubernetes/monitoring/grafana/
+kubectl apply -f ./infra/kubernetes/monitoring/ingress.yaml
+
+# Deploy Load balanser and proxy
+kubectl apply -f ./infra/kubernetes/logging/
 ```
 
-## Deploy on Google Cloud Platform
+## Author
+Daniil Perestoronin
+- [github/daniilperestoronin](https://github.com/daniilperestoronin)
+- [mail/perestoronin.daniil@gmail.com](mailto:perestoronin.daniil@gmail.com)
 
+## License
+Copyright © 2019 [Daniil Perestoronin](https://github.com/daniilperestoronin) Released under the [MIT license](./LICENSE).
