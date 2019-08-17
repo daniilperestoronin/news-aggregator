@@ -7,7 +7,7 @@ variable "region" {
 }
 
 variable "cluster_location" {
-  default = "europe-north1-a"
+  default = "europe-north1"
 }
 
 variable "cluster_k8s_version" {
@@ -15,7 +15,7 @@ variable "cluster_k8s_version" {
 }
 
 variable "initial_node_count" {
-  default = 3
+  default = 1
 }
 
 variable "autoscaling_min_node_count" {

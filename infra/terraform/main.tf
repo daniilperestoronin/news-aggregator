@@ -1,34 +1,16 @@
 provider "google" {
   project = "${var.project}"
-  region  = "${var.region}"
+  region = "${var.region}"
 }
 
 resource "google_container_cluster" "cluster" {
-  name               = "${var.project}-${var.cluster_location}"
-  location               = "${var.cluster_location}"
+  name = "${var.project}-${var.cluster_location}"
+  location = "${var.cluster_location}"
   min_master_version = "${var.cluster_k8s_version}"
 
-  addons_config {
-    network_policy_config {
-      disabled = true
-    }
-
-    http_load_balancing {
-      disabled = false
-    }
-
-    kubernetes_dashboard {
-      disabled = false
-    }
-  }
-
   node_pool {
-    name               = "default-pool"
+    name = "default-pool"
     initial_node_count = "${var.initial_node_count}"
-
-    management {
-      auto_repair = true
-    }
 
     autoscaling {
       min_node_count = "${var.autoscaling_min_node_count}"
@@ -36,12 +18,10 @@ resource "google_container_cluster" "cluster" {
     }
 
     node_config {
-      preemptible  = false
+      preemptible = false
       disk_size_gb = "${var.disk_size_gb}"
-      disk_type    = "${var.disk_type}"
-
+      disk_type = "${var.disk_type}"
       machine_type = "${var.machine_type}"
-
       oauth_scopes = [
         "https://www.googleapis.com/auth/devstorage.read_only",
         "https://www.googleapis.com/auth/logging.write",
@@ -51,17 +31,6 @@ resource "google_container_cluster" "cluster" {
         "https://www.googleapis.com/auth/trace.append",
         "https://www.googleapis.com/auth/compute",
       ]
-
-      labels {
-        env = "prod"
-      }
     }
   }
-}
-
-resource "google_compute_disk" "default" {
-  name  = "prometheus-volume"
-  type  = "pd-ssd"
-  zone  = "${var.cluster_location}"
-  size  = 15
 }

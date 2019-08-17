@@ -16,7 +16,7 @@ terraform apply
 ### Get credentials for kubernetes
 
 ```bash
-gcloud container clusters get-credentials news-agg-host-dev-europe-north1-a --zone europe-north1-a --project news-agg-host-dev
+gcloud container clusters get-credentials news-agg-host-dev-europe-north1 --zone europe-north1 --project news-agg-host-dev
 ```
 
 ### Check
