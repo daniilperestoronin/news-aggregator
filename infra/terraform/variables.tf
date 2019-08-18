@@ -37,3 +37,7 @@ variable "disk_type" {
 variable "machine_type" {
   default = "n1-standard-1"
 }
+
+variable "helm_version" {
+  default = "v2.9.1"
+}
