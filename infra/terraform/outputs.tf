@@ -18,5 +18,5 @@ output "cluster_name" {
 }
 
 output "host" {
-  value     = "${google_container_cluster.app-cluster.endpoint}"
+  value = "${google_container_cluster.app-cluster.endpoint}"
 }

@@ -46,3 +46,14 @@ resource "helm_release" "proxy-load-balancer_traefik" {
   chart = "stable/traefik"
   name  = "traefik"
 }
+
+resource "helm_release" "prometheus_operator" {
+  name      = "prometheus-operator"
+  chart     = "stable/prometheus-operator"
+  namespace = "monitoring"
+  version   = "4.3.6"
+
+  values = [
+    "${file("${path.module}/monitoring/values.yml")}",
+  ]
+}
